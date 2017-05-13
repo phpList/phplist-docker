@@ -13,10 +13,17 @@ To use this you need to have a working docker version 2 environment.
 That is unfortunately not just yet too straightforward. 
 Head over to https://www.docker.com and get started
 
-You need the following commands
+You need the following commands (I'm reporting the versions I have, May 2017)
     
     docker
+    
+        $ docker --version
+        Docker version 1.12.6, build 78d1802    
+
     docker-compose
+    
+        $ docker-compose --version
+        docker-compose version 1.8.0
 
 
 ## configuration 
