@@ -20,11 +20,10 @@ You need the following commands (I'm reporting the versions I have, May 2017)
         $ docker --version
         Docker version 1.12.6, build 78d1802    
 
-    docker-compose
+    docker-compose 
     
         $ docker-compose --version
         docker-compose version 1.8.0
-
 
 ## configuration 
 
@@ -74,3 +73,10 @@ Current features in the container are:
 - CKEditor Plugin
 - Image Upload works (and will be saved when you stop the container)
 - Sending of emails does *not* work
+
+
+
+## hints
+
+For docker-compose, visit https://github.com/docker/compose/releases
+For docker, visit https://github.com/docker/docker/releases
