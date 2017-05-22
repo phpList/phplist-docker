@@ -1,7 +1,6 @@
 # phplist-docker
 
 Run phpList (www.phplist.org) in a Docker environment
-The Yaml file will use mariadb
 
 Work in progress, more features coming
 The current configuration will not send any emails to the world. All
@@ -75,8 +74,12 @@ Current features in the container are:
 - Sending of emails does *not* work
 
 
-
 ## hints
 
 For docker-compose, visit https://github.com/docker/compose/releases
 For docker, visit https://github.com/docker/docker/releases
+
+
+## development
+
+To use this docker setup for development of phpList, phpList themes or phpList plugins visit https://resources.phplist.com/develop/docker
