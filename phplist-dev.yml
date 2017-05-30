@@ -7,6 +7,7 @@ services:
 
    mailhost:
      image: phplist/postfix:latest
+     restart: always
      volumes:
        - mailhost_spool:/var/spool/postfix
 
