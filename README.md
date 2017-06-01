@@ -80,6 +80,6 @@ For docker-compose, visit https://github.com/docker/compose/releases
 For docker, visit https://github.com/docker/docker/releases
 
 
-## development
+## development.
 
 To use this docker setup for development of phpList, phpList themes or phpList plugins visit https://resources.phplist.com/develop/docker
