@@ -9,9 +9,11 @@ exec > /usr/bin/phplist
 
 echo '#!/bin/bash'
 echo -n
+echo 'exec 6>&1'
 echo 'exec > /dev/null 2>&1'
 printenv | sed 's/^\(.*\)$/export \1/g'
 echo -n
+echo 'exec 1>&6 6>&-'
 echo /usr/bin/php /var/www/phpList3/public_html/lists/admin/index.php -c /var/www/phpList3/config.php \$\*
 
 exec 1>&6 6>&-
