@@ -56,7 +56,8 @@ services:
 
    proxy:
      depends_on:
-       - phplist
+       - phplist-dev
+       - phplist-hosted
      image: proxy:latest
      restart: always
      ports:
