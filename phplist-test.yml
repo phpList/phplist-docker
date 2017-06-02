@@ -39,9 +39,9 @@ services:
        - mailhost
      image: phplist/phplist:latest
      volumes:
-       - /home/michiel/hosted-phplist/phpList3/public_html/:/var/www/phpList3/public_html/
+       - /home/michiel/hosted-phpList/phpList3/public_html/:/var/www/phpList3/public_html/
        - images:/var/www/phpList3/public_html/images
-       - /home/michiel/hosted-phplist/plugins:/var/www/phpList3/public_html/lists/admin/plugins/
+       - /home/michiel/hosted-phpList/plugins:/var/www/phpList3/public_html/lists/admin/plugins/
      ports:
        - "8001:80"
      restart: always
