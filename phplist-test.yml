@@ -22,7 +22,28 @@ services:
        - /home/michiel/dev/phpListThemes:/var/www/phpList3/public_html/lists/admin/ui/
        - /home/michiel/dev/phpListPlugins:/var/www/phpList3/public_html/lists/admin/plugins/
      ports:
-       - "${PORT}:80"
+       - "8000:80"
+     restart: always
+     environment:
+       DB_HOST: dbhost
+       DB_USER: phplist
+       DB_PASSWORD: phplist
+       DB_NAME: phplistdb
+       HOSTNAME: ${HOSTNAME}
+       PORT: ${PORT}
+       MAILHOST: mailhost
+
+   phplist-hosted:
+     depends_on:
+       - dbhost
+       - mailhost
+     image: phplist/phplist:latest
+     volumes:
+       - /home/michiel/hosted-phplist/phpList3/public_html/:/var/www/phpList3/public_html/
+       - images:/var/www/phpList3/public_html/images
+       - /home/michiel/hosted-phplist/plugins:/var/www/phpList3/public_html/lists/admin/plugins/
+     ports:
+       - "8001:80"
      restart: always
      environment:
        DB_HOST: dbhost
