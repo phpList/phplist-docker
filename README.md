@@ -17,12 +17,12 @@ You need the following commands (I'm reporting the versions I have, May 2017)
     docker
     
         $ docker --version
-        Docker version 1.12.6, build 78d1802    
+        Docker version 17.12.1-ce, build 7390fc6 
 
     docker-compose 
     
         $ docker-compose --version
-        docker-compose version 1.8.0
+        docker-compose version 1.19.0, build 9e633ef
 
 ## configuration 
 
