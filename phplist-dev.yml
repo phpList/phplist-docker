@@ -1,4 +1,4 @@
-version: '2'
+version: '3.5'
 
 services:
    dbhost:
@@ -16,6 +16,7 @@ services:
        - dbhost
        - mailhost
      image: phplist/phplist:latest
+     build: ./phplist
      volumes:
        - ${CODE_PATH}:/var/www/phpList3/public_html/
        - images:/var/www/phpList3/public_html/images
