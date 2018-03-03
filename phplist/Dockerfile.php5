@@ -1,13 +1,13 @@
 
-FROM debian:stretch-slim
+FROM debian:jessie-slim
 
 MAINTAINER Michiel Dethmers <michiel@phplist.com>
 RUN apt-get update && apt-get upgrade -y
 
 RUN apt-get install -y apt-utils \
-    vim apache2 net-tools php-mysql \
-    libapache2-mod-php php-curl php-gd \
-    git cron php-imap php-xml
+    vim apache2 net-tools php5-mysql \
+    libapache2-mod-php5 php5-curl php5-gd \
+    git cron php5-imap
 
 RUN cd /var/www/ && \
     git clone https://github.com/phplist/phplist3.git phpList3 && \
