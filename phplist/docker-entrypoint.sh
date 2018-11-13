@@ -23,14 +23,14 @@ chmod 755 /usr/bin/phplist
 UNCONNECTED=$(phplist | grep "Cannot connect")
 COUNT=1
 while [[ "$UNCONNECTED" ]] && [[ $COUNT -lt 11 ]] ; do
-    echo Waiting for the Database Container to be available - $COUNT/10
+    echo Waiting for the Database to be available - $COUNT/10
     sleep 10;
     UNCONNECTED=$(phplist | grep "Cannot connect")
     COUNT=$(( $COUNT + 1 ))
 done
 
 if [[ "$UNCONNECTED" ]]; then
-    echo Failed to find a Database container to connect to
+    echo Failed to find a Database to connect to
     exit;
 fi
 
