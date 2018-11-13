@@ -12,17 +12,17 @@ To use this you need to have a working docker version 2 environment.
 That is unfortunately not just yet too straightforward. 
 Head over to https://www.docker.com and get started
 
-You need the following commands (I'm reporting the versions I have, May 2017)
+You need the following commands (I'm reporting the versions I have, Sep 2018)
     
     docker
     
         $ docker --version
-        Docker version 17.12.1-ce, build 7390fc6 
+Docker version 18.03.1-ce, build 9ee9f40
 
     docker-compose 
     
         $ docker-compose --version
-        docker-compose version 1.19.0, build 9e633ef
+docker-compose version 1.21.0-rc1, build 1d32980
 
 ## configuration 
 
