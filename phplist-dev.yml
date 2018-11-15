@@ -11,6 +11,11 @@ services:
      volumes:
        - mailhost_spool:/var/spool/postfix
 
+   mailhog:
+     image: mailhog/mailhog:latest
+     ports:
+       - 8025:8025
+
    phplist:
      depends_on:
        - dbhost
@@ -32,7 +37,7 @@ services:
        DB_NAME: phplistdb
        HOSTNAME: ${HOSTNAME}
        PORT: ${PORT}
-       MAILHOST: mailhost
+       MAILHOST: mailhog
 
 volumes:
     images:
