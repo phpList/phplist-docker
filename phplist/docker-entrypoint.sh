@@ -35,7 +35,7 @@ if [[ "$UNCONNECTED" ]]; then
 fi
 
 /usr/bin/phplist -pinitialise
-#/usr/bin/phplist -pinitlanguages
+/usr/bin/phplist -pinitlanguages
 
 echo READY
 echo $(phplist --version)
