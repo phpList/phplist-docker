@@ -1,4 +1,4 @@
-version: '2'
+version: '3.5'
 
 services:
    dbhost:
@@ -11,11 +11,17 @@ services:
      volumes:
        - mailhost_spool:/var/spool/postfix
 
+   mailhog:
+     image: mailhog/mailhog:latest
+     ports:
+       - 8025:8025
+
    phplist:
      depends_on:
        - dbhost
        - mailhost
      image: phplist/phplist:latest
+     build: ./phplist
      volumes:
        - ${CODE_PATH}:/var/www/phpList3/public_html/
        - images:/var/www/phpList3/public_html/images
@@ -31,7 +37,7 @@ services:
        DB_NAME: phplistdb
        HOSTNAME: ${HOSTNAME}
        PORT: ${PORT}
-       MAILHOST: mailhost
+       MAILHOST: mailhog
 
 volumes:
     images:

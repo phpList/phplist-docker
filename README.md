@@ -12,17 +12,17 @@ To use this you need to have a working docker version 2 environment.
 That is unfortunately not just yet too straightforward. 
 Head over to https://www.docker.com and get started
 
-You need the following commands (I'm reporting the versions I have, May 2017)
+You need the following commands (I'm reporting the versions I have, Sep 2018)
     
     docker
     
         $ docker --version
-        Docker version 1.12.6, build 78d1802    
+Docker version 18.03.1-ce, build 9ee9f40
 
     docker-compose 
     
         $ docker-compose --version
-        docker-compose version 1.8.0
+docker-compose version 1.21.0-rc1, build 1d32980
 
 ## configuration 
 
@@ -80,6 +80,6 @@ For docker-compose, visit https://github.com/docker/compose/releases
 For docker, visit https://github.com/docker/docker/releases
 
 
-## development
+## development.
 
 To use this docker setup for development of phpList, phpList themes or phpList plugins visit https://resources.phplist.com/develop/docker
