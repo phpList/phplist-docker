@@ -41,12 +41,7 @@ COPY phplist-crontab /
 RUN crontab /phplist-crontab
 COPY docker-entrypoint.sh /usr/local/bin/
 
-#RUN chmod 755 /usr/bin/phplist
-#RUN /usr/bin/phplist -pinitialise
-
 EXPOSE 80 443
 
-VOLUME ["/var/www", "/var/log/apache2", "/etc/apache2"]
-#CMD ["/bin/bash"]
-#CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+VOLUME ["/var/www", "/var/log/apache2"]
 ENTRYPOINT ["docker-entrypoint.sh"]
