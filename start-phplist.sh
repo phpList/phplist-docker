@@ -12,7 +12,7 @@ if [ -z $test ] && [ -n "$THEME_DEV_PATH" ] && [ -n "$CODE_PATH" ] && [ -n "$COD
 fi
 
 docker stop $(docker ps -q)
-docker-compose -f $FILE down --remove-orphans
+docker-compose -f $FILE down --remove-orphans 
 docker-compose -f $FILE pull
-docker-compose -f $FILE up -d --build
+docker-compose -f $FILE up -d --build -V
 
