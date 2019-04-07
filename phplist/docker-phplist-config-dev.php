@@ -6,6 +6,7 @@ $database_user = getenv('DB_USER');
 $database_password = getenv('DB_PASSWORD');
 $mailhost = getenv('MAILHOST');
 define('PHPMAILERHOST', $mailhost);
+define('PHPMAILERPORT', 1025);
 define('TEST', 0);
 define('HASH_ALGO', 'sha256');
 define('UPLOADIMAGES_DIR','images');
