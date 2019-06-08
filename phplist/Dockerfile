@@ -26,9 +26,10 @@ RUN echo REFRESH=${REFRESH}
 RUN echo VERSION=${VERSION}
 
 RUN rm -rf /var/www/phpList3 && mkdir /var/www/phpList3
+RUN rm -rf /etc/phpList3 && mkdir /etc/phpList3
 
 COPY phplist-${VERSION}/ /var/www/phpList3
-COPY docker-phplist-config-live.php /var/www/phpList3/config.php
+COPY docker-phplist-config-live.php /etc/phpList3/config.php
 
 RUN mkdir -p /var/www/phpList3/public_html/images && \
     mkdir -p /var/www/phpList3/public_html/lists/admin/plugins && \
