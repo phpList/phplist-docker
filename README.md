@@ -34,8 +34,8 @@ Edit the values to match your situation
 
 You can leave the database values, but you will need to set
     
-    PHPLIST_ADMINNAME=Your Name
-    PHPLIST_ADMINPASSWORD=SomeRandomPassword
+    PHPLIST_ADMINNAME="Your Name"
+    PHPLIST_ADMINPASSWORD="SomeRandomPassword"
     PHPLIST_ADMINEMAIL=YourEmail@Yourdomain.com
     
 and
