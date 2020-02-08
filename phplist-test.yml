@@ -21,6 +21,7 @@ services:
        - images:/var/www/phpList3/public_html/images
        - /home/michiel/dev/phpListThemes:/var/www/phpList3/public_html/lists/admin/ui/
        - /home/michiel/dev/phpListPlugins:/var/www/phpList3/public_html/lists/admin/plugins/
+       - ./phplist/docker-apache-phplist.conf:/etc/apache2/sites-enabled/docker-apache-phplist.conf:ro
      ports:
        - "8000:80"
      restart: always
