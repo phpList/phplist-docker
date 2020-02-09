@@ -24,6 +24,7 @@ services:
      image: phplist/phplist:3.3.6
      volumes:
        - images:/var/www/phpList3/public_html/images
+       - ./phplist/docker-apache-phplist.conf:/etc/apache2/sites-enabled/docker-apache-phplist.conf:ro
      ports:
        - "${PORT}:80"
      restart: always
