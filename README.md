@@ -65,6 +65,17 @@ http://localhost:8000/lists/admin/
 and login with username "admin" and password "SomeRandomPassword"
 
 
+## images and plugins
+
+You can map the images and plugins folders to a folder on the host machine with
+
+    IMAGES=/path/to/images
+    PLUGINS=/path/to/plugins
+
+When you do that, they will be retained when you rebuild the system. Make sure the folders are fully world-writable (hint: chmod 777)
+
+When these variables are absent, the images and plugins will be placed on Docker Volumes. 
+
 ## features
 
 Current features in the container are:

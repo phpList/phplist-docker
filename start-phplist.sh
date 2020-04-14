@@ -14,5 +14,5 @@ fi
 docker stop $(docker ps -q)
 docker-compose -f $FILE down --remove-orphans 
 docker-compose -f $FILE pull
-docker-compose -f $FILE up -d --build -V
+docker-compose -f $FILE up -d -V
 
