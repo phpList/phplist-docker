@@ -1,5 +1,5 @@
  
-FROM debian:stretch-slim
+FROM debian:buster-slim
 
 MAINTAINER Michiel Dethmers <michiel@phplist.com>
 
@@ -26,6 +26,8 @@ RUN cd /var/www/ && \
 RUN cd /tmp && git clone https://github.com/bramley/phplist-plugin-ckeditor.git && \
     mv phplist-plugin-ckeditor/plugins/* /var/www/phpList3/public_html/lists/admin/plugins/ && \
     rm -rf phplist-plugin-ckeditor
+
+RUN useradd -d /var/www/phpList3 phplist
 
 RUN rm -f /etc/apache2/sites-enabled/000-default.conf && \
     cd /var/www/ && find . -type d -name .git -print0 | xargs -0 rm -rf && \
