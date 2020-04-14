@@ -1,5 +1,5 @@
 
-FROM debian:stretch-slim
+FROM debian:buster-slim
 
 MAINTAINER Michiel Dethmers <michiel@phplist.com>
 
@@ -8,7 +8,7 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y apt-utils \
     vim apache2 net-tools php-mysql \
     libapache2-mod-php php-curl php-gd \
-    git cron php-imap php-xml php-zip
+    git cron php-imap php-xml php-zip php-mbstring
 
 RUN rm -f /etc/apache2/sites-enabled/000-default.conf && \
     cd /var/www/ && find . -type d -name .git -print0 | xargs -0 rm -rf && \
@@ -19,6 +19,8 @@ COPY docker-apache-phplist.conf /etc/apache2/sites-enabled/
 COPY phplist-crontab /
 RUN crontab /phplist-crontab
 COPY docker-entrypoint.sh /usr/local/bin/
+
+RUN useradd -d /var/www/phpList3 phplist
 
 ARG REFRESH=unknown
 ARG VERSION=unknown
