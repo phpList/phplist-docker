@@ -1,7 +1,7 @@
 
 FROM debian:stretch-slim
 
-MAINTAINER Michiel Dethmers <michiel@phplist.com>
+LABEL maintainer="michiel@phplist.com" 
 
 RUN apt-get update && apt-get upgrade -y
 
