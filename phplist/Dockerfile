@@ -20,9 +20,7 @@ COPY phplist-crontab /
 RUN crontab /phplist-crontab
 COPY docker-entrypoint.sh /usr/local/bin/
 
-ARG REFRESH=unknown
-ARG VERSION=3.4.0
-RUN echo REFRESH=${REFRESH}
+ARG VERSION=3.5.8
 RUN echo VERSION=${VERSION}
 
 RUN rm -rf /var/www/phpList3 && mkdir /var/www/phpList3
