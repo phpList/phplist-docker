@@ -1,13 +1,8 @@
  
 FROM debian:buster-slim
 
-MAINTAINER Michiel Dethmers <michiel@phplist.com>
-
-ARG REFRESH=unknown
-RUN echo REFRESH=${REFRESH}
-
+LABEL maintainer="michiel@phplist.com" 
 RUN apt-get update && apt-get upgrade -y
-
 RUN apt-get install -y apt-utils \
     vim apache2 net-tools php-mysql \
     libapache2-mod-php php-curl php-gd \
