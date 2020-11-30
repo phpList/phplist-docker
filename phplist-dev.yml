@@ -1,8 +1,20 @@
+
+## setup for phpList development
+
 version: '3.5'
+
+networks:
+ default:
+  ipam:
+   driver: default
+   config:
+   - subnet: 172.18.0.0/16
 
 services:
    dbhost:
      image: phplist/testdata:medium
+     environment:
+       MYSQL_ROOT_PASSWORD: phplist
      restart: always
 
    mailhost:
