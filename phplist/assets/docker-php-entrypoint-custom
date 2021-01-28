@@ -1,0 +1,66 @@
+#!/bin/sh
+set -e
+
+# return true if specified directory is empty
+# source: https://raw.githubusercontent.com/nextcloud/docker/master/17.0/fpm-alpine/entrypoint.sh
+directory_empty() {
+    [ -z "$(ls -A "$1/")" ]
+}
+
+# ==============================================================================
+# Version comparison source:
+#  https://github.com/nextcloud/docker/blob/master/17.0/fpm-alpine/entrypoint.sh
+# ==============================================================================
+# version_greater A B returns whether A > B
+version_greater() {
+    [ "$(printf '%s\n' "$@" | sort -t '.' -n -k1,1 -k2,2 -k3,3 -k4,4 | head -n 1)" != "$1" ]
+}
+
+installed_version="0.0.0"
+if [ -f /var/www/html/admin/init.php ]; then
+  # shellcheck disable=SC2016
+  installed_version="$(php -r 'require "/var/www/html/admin/init.php"; echo VERSION;')"
+fi
+# shellcheck disable=SC2016
+image_version="$(php -r 'require "/usr/src/phplist/lists/admin/init.php"; echo VERSION;')"
+
+echo "installed_version = $installed_version"
+echo "image_version = $image_version"
+
+if version_greater "$installed_version" "$image_version"; then
+  echo "Can't start PHPList because the version of the data ($installed_version) is higher than the docker image version ($image_version) and downgrading is not supported. Are you sure you have pulled the newest image version?"
+  exit 1
+fi
+
+if version_greater "$image_version" "$installed_version"; then
+  # copy the application file to ensure it is up to date
+  if [ "$(id -u)" = 0 ]; then
+    rsync_options="-rlDpog --chown www-data:root"
+  else
+    rsync_options="-rlDp"
+  fi
+  
+  rsync $rsync_options --delete --exclude '/config' /usr/src/phplist/lists/ /var/www/html/
+  
+  # initialize connfig on first run
+  if [  ! -d "/var/www/html/config" ] || directory_empty "/var/www/html/config"; then
+    rsync $rsync_options --include "/config/" --exclude '/*' /usr/src/phplist/lists/ /var/www/html/
+  fi
+
+  # grep -c fails when no line is matching so let's use the old way
+  nb_lines=$(grep '##PHPLIST_' /var/www/html/config/config.php | wc -l)
+  if [ ${nb_lines} -ne 0 ]; then
+    # we replace all PHPLIST_ variable by the value passed in the environment
+    for env_var in $(env | grep '^PHPLIST_' | cut -d'=' -f1); do
+      temp_var="\$${env_var}"
+      env_var_value=`eval "echo ${temp_var}"`
+      sed -i "s|##${env_var}##|${env_var_value}|" /var/www/html/config/config.php
+    done
+  fi
+
+  # we copy the default config for reference in case of update
+  cp /usr/src/phplist/lists/config/*_default.php /var/www/html/config/
+fi
+
+exec docker-php-entrypoint "$@"
+

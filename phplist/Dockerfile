@@ -1,42 +1,42 @@
+FROM php:7.4-fpm-alpine
 
-FROM debian:stretch-slim
+ENV PHPLIST_VERSION 3.6.0
+COPY assets/ /tmp/assets
 
-LABEL maintainer="michiel@phplist.com" 
+# Use the default production configuration
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+    # avoid warning due to non up-to-date packages
+ && apk update \
+    # rsync + imap + gd installation
+    # imap: imap, openssl, imap-dev, openssl-dev
+    # gd: libjpeg-turbo, libpng, libzip, libjpeg-turbo-dev, libpng-dev, libzip-dev
+    #    libpng, libjpeg-turbo, and libzip explicitely installed to avoid removal with -dev later
+    #    you can add libwebp libxpm libwebp-dev libxpm-dev if needed
+    # zip: libzip libzip-dev
+ && apk add --no-cache rsync libjpeg-turbo libpng freetype imap openssl libzip libjpeg-turbo-dev libpng-dev freetype-dev imap-dev openssl-dev libzip-dev \
+    # If you added webp and xpm, add also --with-webp-dir --with-xpm-dir
+ && docker-php-ext-configure gd --enable-gd --with-jpeg --with-freetype \
+ && docker-php-ext-configure imap --with-imap --with-imap-ssl \
+ && docker-php-ext-install mysqli pdo_mysql gd imap zip \
+    # do not remove imap-dev otherwise imap.so cannot be loaded
+&& apk del libjpeg-turbo-dev libpng-dev freetype-dev openssl-dev libzip-dev \
+ && wget -O /tmp/phplist-${PHPLIST_VERSION}.tgz https://sourceforge.net/projects/phplist/files/phplist/${PHPLIST_VERSION}/phplist-${PHPLIST_VERSION}.tgz \
+ && mkdir /usr/src/phplist \
+ && cd /usr/src/phplist \
+ && tar -xzf /tmp/phplist-${PHPLIST_VERSION}.tgz \
+ && mv phplist-${PHPLIST_VERSION}/public_html/lists lists \
+ && cp lists/config/config.php lists/config/config_default.php \
+ && cp lists/config/config_extended.php lists/config/config_extended_default.php \
+ && cp /tmp/assets/docker-php-entrypoint-custom /usr/local/bin \
+ && chmod 755 /usr/local/bin/docker-php-entrypoint-custom \
+ && mv /tmp/assets/config/* lists/config/ \
+ && chmod 600 lists/config/* \
+ && chown www-data:root /usr/src/phplist \
+    # reduce image size
+ && rm -rf /tmp/* \
+ && rm -rf /var/cache/apk/*
 
-RUN apt-get update && apt-get upgrade -y
 
-RUN apt-get install -y apt-utils \
-    vim apache2 net-tools php-mysql \
-    libapache2-mod-php php-curl php-gd \
-    git cron php-imap php-xml php-zip php-mbstring
+ENTRYPOINT ["docker-php-entrypoint-custom"]
+CMD ["php-fpm"]
 
-RUN rm -f /etc/apache2/sites-enabled/000-default.conf && \
-    cd /var/www/ && find . -type d -name .git -print0 | xargs -0 rm -rf && \
-    find . -type d -print0 | xargs -0 chmod 755 && \
-    find . -type f -print0 | xargs -0 chmod 644
-
-COPY docker-apache-phplist.conf /etc/apache2/sites-enabled/
-COPY phplist-crontab /
-RUN crontab /phplist-crontab
-COPY docker-entrypoint.sh /usr/local/bin/
-
-ARG VERSION=3.5.8
-RUN echo VERSION=${VERSION}
-
-RUN rm -rf /var/www/phpList3 && mkdir /var/www/phpList3
-RUN rm -rf /etc/phpList3 && mkdir /etc/phpList3
-
-COPY phplist-${VERSION}/ /var/www/phpList3
-COPY docker-phplist-config-live.php /var/www/phpList3/config.php
-
-RUN mkdir -p /var/www/phpList3/public_html/images && \
-    mkdir -p /var/www/phpList3/public_html/lists/admin/plugins && \
-    chmod 777 /var/www/phpList3/public_html/images && \
-    chmod 777 /var/www/phpList3/public_html/lists/admin/plugins
-
-RUN chown -R www-data: /var/www/phpList3
-
-EXPOSE 80 443
-
-VOLUME ["/var/www", "/var/log/apache2"]
-ENTRYPOINT ["docker-entrypoint.sh"]
