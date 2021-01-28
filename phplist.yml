@@ -1,4 +1,4 @@
-version: '2'
+version: '3.5'
 
 services:
    dbhost:
@@ -23,9 +23,10 @@ services:
        - mailhost
      image: phplist/phplist:latest
      volumes:
-       - images:/var/www/phpList3/public_html/images
+       - ${IMAGES:-images}:/var/www/phpList3/public_html/images
+       - ${PLUGINS:-plugins}:/var/www/phpList3/public_html/lists/admin/plugins
      ports:
-       - "${PORT}:80"
+       - "${PORT:-8000}:80"
      restart: always
      environment:
        DB_HOST: dbhost
@@ -43,3 +44,4 @@ volumes:
     dbhost_data:
     images:
     mailhost_spool:
+    plugins:

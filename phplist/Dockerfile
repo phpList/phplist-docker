@@ -1,5 +1,5 @@
 
-FROM debian:stretch-slim
+FROM debian:buster-slim
 
 LABEL maintainer="michiel@phplist.com" 
 
@@ -20,7 +20,11 @@ COPY phplist-crontab /
 RUN crontab /phplist-crontab
 COPY docker-entrypoint.sh /usr/local/bin/
 
-ARG VERSION=3.5.8
+RUN useradd -d /var/www/phpList3 phplist
+
+ARG REFRESH=unknown
+ARG VERSION=unknown
+RUN echo REFRESH=${REFRESH}
 RUN echo VERSION=${VERSION}
 
 RUN rm -rf /var/www/phpList3 && mkdir /var/www/phpList3
