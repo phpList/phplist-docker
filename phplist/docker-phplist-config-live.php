@@ -12,3 +12,4 @@ define('UPLOADIMAGES_DIR','images');
 define ('MANUALLY_PROCESS_BOUNCES',1);
 define ('MANUALLY_PROCESS_QUEUE',0);
 define('PHPMAILER_SECURE',0);
+define('CHECK_REFERRER',false);
