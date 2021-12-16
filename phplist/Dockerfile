@@ -40,7 +40,6 @@ RUN mkdir -p /var/www/phpList3/public_html/images && \
 
 RUN chown -R www-data: /var/www/phpList3
 
-EXPOSE 80 443
+EXPOSE 80 
 
-VOLUME ["/var/www", "/var/log/apache2"]
 ENTRYPOINT ["docker-entrypoint.sh"]
