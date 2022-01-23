@@ -14,3 +14,4 @@ define('VERBOSE',true);
 define('ASKFORPASSWORD',true);
 define('DEVVERSION',true);
 $show_dev_errors = 1;
+$developer_email = 'developer@domain.com';
