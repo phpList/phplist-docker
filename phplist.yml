@@ -45,5 +45,4 @@ services:
 volumes:
     dbhost_data:
     images:
-    mailhost_spool:
     plugins:

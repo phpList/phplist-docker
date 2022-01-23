@@ -12,7 +12,7 @@ networks:
 
 services:
    dbhost:
-     container_name: dbhost
+     container_name: phplist_dbhost
      image: phplist/testdata:medium
      volumes:
        - dbhost_data:/var/lib/mysql
@@ -21,7 +21,7 @@ services:
      restart: always
 
    mailhog:
-     container_name: mailhog
+     container_name: phplist_mailhog
      image: mailhog/mailhog:latest
      ports:
        - 8025:8025
@@ -51,5 +51,4 @@ services:
 
 volumes:
     images:
-    mailhost_spool:
     dbhost_data:
