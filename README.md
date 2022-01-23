@@ -98,7 +98,7 @@ Current features in the container are:
 
 To reset the admin password run
 
-``docker exec phplist_dbhost mysql -u[DBUSER] -p[DBPASS] [DBNAME] -e 'update phplist_admin set password = "NEWPASSWORD"``
+``docker exec phplist_dbhost mysql -u[DBUSER] -p[DBPASS] [DBNAME] -e 'update phplist_admin set password = "NEWPASSWORD"'``
 
 
 ## development.
