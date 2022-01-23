@@ -2,13 +2,18 @@
 
 VERSION=$1
 
-if [ -d phplist-$VERSION ]; then
-	docker rmi -f phplist/phplist:$VERSION
-#	docker system prune -f
-	docker build --build-arg REFRESH=$(date +%s) --build-arg VERSION=$VERSION -f Dockerfile -t phplist/phplist:$VERSION .
-	docker push phplist/phplist:$VERSION
+cd "$(dirname "$0")"
+. .env
+
+if [[ -f $VERSIONDIR/phplist-${VERSION}.tgz ]]; then
+    docker rmi -f phplist/phplist:$VERSION
+    docker system prune -f
+    tar zxf $VERSIONDIR/phplist-${VERSION}.tgz 
+    docker build --build-arg VERSION=$VERSION --no-cache -f Dockerfile -t phplist/phplist:$VERSION .
+    docker push phplist/phplist:$VERSION
+    rm -rf phplist-${VERSION}
 else
-	docker rmi -f phplist/phplist:latest
-	docker build --build-arg REFRESH=$(date +%s) -f Dockerfile.git -t phplist/phplist:latest .
-	docker push phplist/phplist:latest
+    docker rmi -f phplist/phplist:latest
+    docker build --no-cache -f Dockerfile.git -t phplist/phplist:latest .
+    docker push phplist/phplist:latest
 fi

@@ -1,28 +1,30 @@
 # phplist-docker
 
-Run phpList (www.phplist.org) in a Docker environment
+Run [phpList](www.phplist.org) in a Docker environment
 
 Work in progress, more features coming
 The current configuration will not send any emails to the world. All
-emails will be delivered to the mailhost machine locally.
+emails will be delivered to the mailhog container locally.
+
+The main aim of this setup is to facilitate phpList development. If you are looking for 
+phpList in Docker, without the need to make any changes, you can find it on [Docker Hub](https://hub.docker.com/repository/docker/phplist/phplist_)
 
 ## pre-requisites
 
-To use this you need to have a working docker version 2 environment. 
-That is unfortunately not just yet too straightforward. 
-Head over to https://www.docker.com and get started
+To use this you need to have a working docker environment. 
+Head over to https://www.docker.com to get started
 
-You need the following commands (I'm reporting the versions I have, Sep 2018)
+You need the following commands (I'm reporting the versions I have, Jan 2022)
     
     docker
     
         $ docker --version
-Docker version 18.03.1-ce, build 9ee9f40
+Docker version 20.10.12, build e91ed57
 
     docker-compose 
     
         $ docker-compose --version
-docker-compose version 1.21.0-rc1, build 1d32980
+docker-compose version 1.29.0, build unknown
 
 ## configuration 
 
@@ -51,6 +53,12 @@ the port to connect to. To try it out on your local machine, you can use the def
 Once you have set the values in .env, you can run
 
     ./start-phplist.sh
+
+This will choose between two possible scenarios. 
+- phpList running from the code in the containers (phplist.yml)
+- phpList running from the code on your local machine (phplist-dev.yml)
+
+For the latter, you need to map the code on your machine to the code in the container. You can do this with variables in the .env file.
     
 Wait some time, because the first time the database will be created and configured.
 
@@ -65,19 +73,34 @@ http://localhost:8000/lists/admin/
 and login with username "admin" and password "SomeRandomPassword"
 
 
+## images and plugins
+
+You can map the images and plugins folders to a folder on the host machine with
+
+    IMAGES=/path/to/images
+    PLUGINS=/path/to/plugins
+
+When you do that, they will be retained when you rebuild the system. Make sure the folders are fully world-writable (hint: chmod 777)
+
+When these variables are absent, the images and plugins will be placed on Docker Volumes. 
+
 ## features
 
 Current features in the container are:
 
 - CKEditor Plugin
 - Image Upload works (and will be saved when you stop the container)
-- Sending of emails does *not* work
-
+- All emails will be sent to Mailhog, which you can get to with http://localhost:8025
 
 ## hints
 
-For docker-compose, visit https://github.com/docker/compose/releases
-For docker, visit https://github.com/docker/docker/releases
+* For docker-compose, visit https://github.com/docker/compose/releases
+* For docker, visit https://github.com/moby/moby/releases
+* You can choose the version of phpList to run with the PHPLIST_VERSION variable in .env
+
+To reset the admin password run
+
+``docker exec phplist_dbhost mysql -u[DBUSER] -p[DBPASS] [DBNAME] -e 'update phplist_admin set password = "NEWPASSWORD"``
 
 
 ## development.
