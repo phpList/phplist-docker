@@ -25,6 +25,8 @@ services:
      image: mailhog/mailhog:latest
      ports:
        - 8025:8025
+     environment:
+       MH_SMTP_BIND_ADDR: 0.0.0.0:25
 
    phplist:
      container_name: phplist

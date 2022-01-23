@@ -18,6 +18,8 @@ services:
      image: mailhog/mailhog:latest
      ports:
        - 8025:8025
+     environment:
+       MH_SMTP_BIND_ADDR: 0.0.0.0:25
 
    phplist:
      container_name: phplist
@@ -31,7 +33,7 @@ services:
        - "${PORT:-8000}:80"
      restart: always
      environment:
-       DB_HOST: dbhost
+       DB_HOST: phplist_dbhost
        DB_USER: ${MYSQL_USER}
        DB_PASSWORD: ${MYSQL_PASSWORD}
        DB_NAME: ${MYSQL_DATABASE}
