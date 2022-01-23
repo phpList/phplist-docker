@@ -2,6 +2,7 @@ version: '3.5'
 
 services:
    dbhost:
+     container_name: phplist_dbhost
      image: mariadb:10.1
      volumes:
        - dbhost_data:/var/lib/mysql
@@ -12,19 +13,20 @@ services:
        MYSQL_USER: ${MYSQL_USER}
        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
-   mailhost:
-     image: phplist/postfix:latest
-     volumes:
-       - mailhost_spool:/var/spool/postfix
+   mailhog:
+     container_name: phplist_mailhog
+     image: mailhog/mailhog:latest
+     ports:
+       - 8025:8025
 
    phplist:
+     container_name: phplist
      depends_on:
        - dbhost
-       - mailhost
-     image: phplist/phplist:latest
+       - mailhog
+     image: phplist/phplist:${PHPLIST_VERSION:-latest}
      volumes:
        - ${IMAGES:-images}:/var/www/phpList3/public_html/images
-       - ${PLUGINS:-plugins}:/var/www/phpList3/public_html/lists/admin/plugins
      ports:
        - "${PORT:-8000}:80"
      restart: always
@@ -38,7 +40,7 @@ services:
        ADMIN_EMAIL: ${PHPLIST_ADMINEMAIL}
        HOSTNAME: ${HOSTNAME}
        PORT: ${PORT}
-       MAILHOST: mailhost
+       MAILHOST: mailhog
 
 volumes:
     dbhost_data:
