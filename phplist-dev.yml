@@ -12,30 +12,28 @@ networks:
 
 services:
    dbhost:
+     container_name: dbhost
      image: phplist/testdata:medium
+     volumes:
+       - dbhost_data:/var/lib/mysql
      environment:
        MYSQL_ROOT_PASSWORD: phplist
      restart: always
 
-   mailhost:
-     image: phplist/postfix:latest
-     restart: always
-     volumes:
-       - mailhost_spool:/var/spool/postfix
-
    mailhog:
+     container_name: mailhog
      image: mailhog/mailhog:latest
      ports:
        - 8025:8025
 
    phplist:
+     container_name: phplist
      depends_on:
        - dbhost
-       - mailhost
-     image: phplist/phplist:latest
-     build: ./phplist
+       - mailhog
+     image: phplist/phplist:${PHPLIST_VERSION:-latest}
      volumes:
-       - ${CODE_PATH}:/var/www/phpList3/public_html/
+       - ${CODE_PATH}:/var/www/phpList3
        - images:/var/www/phpList3/public_html/images
        - ${THEME_DEV_PATH}:/var/www/phpList3/public_html/lists/admin/ui/
        - ${PLUGIN_DEV_PATH}:/var/www/phpList3/public_html/lists/admin/plugins/
@@ -54,3 +52,4 @@ services:
 volumes:
     images:
     mailhost_spool:
+    dbhost_data:
