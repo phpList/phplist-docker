@@ -2,9 +2,7 @@
 
 Run [phpList](www.phplist.org) in a Docker environment
 
-Work in progress, more features coming
-The current configuration will not send any emails to the world. All
-emails will be delivered to the mailhog container locally.
+Work in progress, more features coming. The current configuration will not send any emails to the world. All emails will be delivered to the mailhog container locally.
 
 The main aim of this setup is to facilitate phpList development. If you are looking for 
 phpList in Docker, without the need to make any changes, you can find it on [Docker Hub](https://hub.docker.com/repository/docker/phplist/phplist_)
