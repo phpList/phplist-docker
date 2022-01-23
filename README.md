@@ -53,6 +53,12 @@ the port to connect to. To try it out on your local machine, you can use the def
 Once you have set the values in .env, you can run
 
     ./start-phplist.sh
+
+This will choose between two possible scenarios. 
+- phpList running from the code in the containers (phplist.yml)
+- phpList running from the code on your local machine (phplist-dev.yml)
+
+For the latter, you need to map the code on your machine to the code in the container. You can do this with variables in the .env file.
     
 Wait some time, because the first time the database will be created and configured.
 
