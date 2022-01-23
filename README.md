@@ -104,3 +104,18 @@ To reset the admin password run
 ## development.
 
 To use this docker setup for development of phpList, phpList themes or phpList plugins visit https://resources.phplist.com/develop/docker
+
+
+## database
+
+* To reset the database run
+
+```docker system prune -f
+docker volume rm phplist-docker_dbhost_data
+```
+
+and then restart phpList-docker
+
+* To load your own data into the database, take a DB snapshot, eg "phplist.sql.gz" and run
+
+```gunzip -c phplist.sql.gz | docker exec phplist_dbhost mysql mysql -u[DBUSER] -p[DBPASS] [DBNAME]```
