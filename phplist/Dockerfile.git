@@ -1,12 +1,12 @@
  
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 
 LABEL maintainer="michiel@phplist.com" 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y apt-utils \
     vim apache2 net-tools php-mysql \
     libapache2-mod-php php-curl php-gd \
-    git cron php-imap php-xml php-zip
+    git cron php-imap php-xml php-zip php-sqlite3 php-mbstring php-xdebug 
 
 RUN cd /var/www/ && \
     git clone https://github.com/phplist/phplist3.git phpList3 && \
