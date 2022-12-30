@@ -33,12 +33,12 @@ RUN rm -f /etc/apache2/sites-enabled/000-default.conf && \
     chmod 777 /var/www/phpList3/public_html/lists/admin/plugins
 
 COPY docker-apache-phplist.conf /etc/apache2/sites-enabled/
-COPY docker-phplist-config-dev.php /var/www/phpList3/config.php
-COPY phplist-crontab /
-RUN crontab /phplist-crontab
+RUN  mkdir /etc/phplist
+COPY docker-phplist-config-dev.php /etc/phplist/config.php
+COPY phplist-crontab /etc/cron.d
 COPY docker-entrypoint.sh /usr/local/bin/
 
-EXPOSE 80 443
+EXPOSE 80
 
 VOLUME ["/var/www", "/var/log/apache2"]
 ENTRYPOINT ["docker-entrypoint.sh"]

@@ -16,8 +16,7 @@ RUN rm -f /etc/apache2/sites-enabled/000-default.conf && \
     find . -type f -print0 | xargs -0 chmod 644
 
 COPY docker-apache-phplist.conf /etc/apache2/sites-enabled/
-COPY phplist-crontab /
-RUN crontab /phplist-crontab
+COPY phplist-crontab /etc/cron.d
 COPY docker-entrypoint.sh /usr/local/bin/
 
 RUN useradd -d /var/www/phpList3 phplist
@@ -31,7 +30,7 @@ RUN rm -rf /var/www/phpList3 && mkdir /var/www/phpList3
 RUN rm -rf /etc/phpList3 && mkdir /etc/phpList3
 
 COPY phplist-${VERSION}/ /var/www/phpList3
-COPY docker-phplist-config-live.php /var/www/phpList3/config.php
+COPY docker/docker-phplist-config-live.php /etc/phplist/config.php
 
 RUN mkdir -p /var/www/phpList3/public_html/images && \
     mkdir -p /var/www/phpList3/public_html/lists/admin/plugins && \
