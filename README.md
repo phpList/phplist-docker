@@ -4,6 +4,12 @@ Run [phpList](www.phplist.org) in a Docker environment
 
 Work in progress, more features coming. The current configuration will not send any emails to the world. All emails will be delivered to the mailhog container locally.
 
+**Please note** this is a place to experiment with phpList and Docker and primarily for making development easier. The actual docker images are built in the [main phpList repository](https://github.com/phpList/phplist3/blob/main/Dockerfile.release) with a [Github action](https://github.com/phpList/phplist3/blob/main/.github/workflows/build-release.yml) when it is tagged for release. 
+
+If you want to contribute to the live docker builds, create a pull request there.
+
+You can add "feature requests" to the issue list here though. Then it can be created here and once working well ported to the main repository.
+
 The main aim of this setup is to facilitate phpList development. If you are looking for 
 phpList in Docker, without the need to make any changes, you can find it on [Docker Hub](https://hub.docker.com/repository/docker/phplist/phplist_)
 
@@ -81,6 +87,15 @@ You can map the images and plugins folders to a folder on the host machine with
 When you do that, they will be retained when you rebuild the system. Make sure the folders are fully world-writable (hint: chmod 777)
 
 When these variables are absent, the images and plugins will be placed on Docker Volumes. 
+
+## config
+
+There are a few config settings you can put in the environment, but probably the easiest way to control the phpList configuration is to map your config file as a volume.
+
+Something like
+
+    vi php  
+
 
 ## features
 
