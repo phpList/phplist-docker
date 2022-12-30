@@ -1,4 +1,4 @@
-FROM mariadb:10.1
+FROM mariadb:10.7
 
 ## create a new mysql data location
 RUN mkdir /var/mysql
