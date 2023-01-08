@@ -46,6 +46,8 @@ COPY docker-phplist-config-dev.php /etc/phplist/config.php
 COPY phplist-crontab /etc/cron.d
 COPY docker-entrypoint.sh /usr/local/bin/
 
+WORKDIR /var/www/phpList3
+
 EXPOSE 80
 
 VOLUME ["/var/www", "/var/log/apache2"]
