@@ -22,9 +22,9 @@ chmod 755 /usr/bin/phplist
 if [[ ! -z $PHP_VERSION ]]; then
   apt install -y php${PHP_VERSION}
   update-alternatives --set php /usr/bin/php${PHP_VERSION}
-  apt install -y php-mysql \
-    libapache2-mod-php php-curl php-gd \
-    php-imap php-xml php-zip php-mbstring
+  apt install -y php${PHP_VERSION}-mysql \
+    libapache2-mod-php${PHP_VERSION} php${PHP_VERSION}-curl php${PHP_VERSION}-gd \
+    php${PHP_VERSION}-imap php${PHP_VERSION}-xml php${PHP_VERSION}-zip php${PHP_VERSION}-mbstring
 fi
 
 ## wait for the DB container, but not forever
