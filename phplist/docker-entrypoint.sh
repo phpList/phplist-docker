@@ -20,7 +20,7 @@ exec 1>&6 6>&-
 chmod 755 /usr/bin/phplist
 
 if [[ ! -z $PHP_VERSION ]]; then
-  apt install php${PHP_VERSION}
+  apt install -y php${PHP_VERSION}
   update-alternatives --set php /usr/bin/php${PHP_VERSION}
   apt install -y php-mysql \
     libapache2-mod-php php-curl php-gd \
