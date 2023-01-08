@@ -11,13 +11,21 @@ echo '#!/bin/bash'
 echo -n
 echo 'exec 6>&1'
 echo 'exec > /dev/null 2>&1'
-printenv | sed 's/^\(.*\)$/export \1/g'
+export
 echo -n
 echo 'exec 1>&6 6>&-'
 echo /usr/bin/php /var/www/phpList3/public_html/lists/admin/index.php -c /var/www/phpList3/config.php \$\*
 
 exec 1>&6 6>&-
 chmod 755 /usr/bin/phplist
+
+if [[ ! -z $PHP_VERSION ]]; then
+  apt install php${PHP_VERSION}
+  update-alternatives --set php /usr/bin/php${PHP_VERSION}
+  apt install -y php-mysql \
+    libapache2-mod-php php-curl php-gd \
+    php-imap php-xml php-zip php-mbstring
+fi
 
 ## wait for the DB container, but not forever
 UNCONNECTED=$(phplist | grep "Cannot connect")
