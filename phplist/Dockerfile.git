@@ -1,12 +1,20 @@
  
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 
 LABEL maintainer="michiel@phplist.com" 
-RUN apt-get update && apt-get upgrade -y
+
+
+RUN apt update 
+RUN apt install -y software-properties-common apt-transport-https ca-certificates curl gnupg
+RUN curl -fsSL https://packages.sury.org/php/apt.gpg | apt-key add -
+RUN add-apt-repository "deb https://packages.sury.org/php/ $(lsb_release -cs) main"
+RUN apt update
+RUN apt-get upgrade -y
+
 RUN apt-get install -y apt-utils \
     vim apache2 net-tools php-mysql \
     libapache2-mod-php php-curl php-gd \
-    git cron php-imap php-xml php-zip
+    git cron php-imap php-xml php-zip php-sqlite3 php-mbstring php-xdebug 
 
 RUN cd /var/www/ && \
     git clone https://github.com/phplist/phplist3.git phpList3 && \
@@ -37,6 +45,8 @@ RUN  mkdir /etc/phplist
 COPY docker-phplist-config-dev.php /etc/phplist/config.php
 COPY phplist-crontab /etc/cron.d
 COPY docker-entrypoint.sh /usr/local/bin/
+
+WORKDIR /var/www/phpList3
 
 EXPOSE 80
 
